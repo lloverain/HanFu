@@ -1,0 +1,11 @@
+input[type=radio]{
+    width: 100%;
+    text-align: center;
+}
+body{
+    background-image: url("/assets/modular/login/images/hanfu.jpg");
+    background-size: 100%;
+}
+.rain{
+    margin-top: 10%;
+}

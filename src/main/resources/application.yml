@@ -1,0 +1,16 @@
+#配置文件
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 1314520
+    username: root
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC
+  mvc:
+    view:
+      prefix: /pages
+  thymeleaf:
+      cache: false
+
+server:
+  port: 80
+
