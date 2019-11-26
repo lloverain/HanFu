@@ -1,65 +1,63 @@
 package com.yangjiaying.hanfu.modular.login.util;
 
 import org.junit.Test;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 工具类
+ *
  * @PackageName:com.yangjiaying.hanfu.modular.login.util
  * @ClassName:jiamiPassword
  * @author:yangjiaying
  * @date 2019/11/11 11:13
  */
 public class Password {
-    /**
-     * 使用凯撒加密方式加密数据
-     *
-     * @param orignal :原文
-     * @param key     :密钥
-     * @return :加密后的数据
-     */
-    public static String jiami(String orignal, int key) {
-        // 将字符串转为字符数组
-        char[] chars = orignal.toCharArray();
-        StringBuilder sb = new StringBuilder();
-        // 遍历数组
-        for (char aChar : chars) {
-            // 获取字符的ASCII编码
-            int asciiCode = aChar;
-            // 偏移数据
-            asciiCode += key;
-            // 将偏移后的数据转为字符
-            char result = (char) asciiCode;
-            // 拼接数据
-            sb.append(result);
-        }
 
-        return sb.toString();
+    /**
+     * 加密用的Key 可以用26个字母和数字组成
+     * 此处使用AES-128-CBC加密模式，key需要为16位。
+     */
+    private static String sKey = "woaizhangyu13145";
+    private static String ivParameter = "1301709740131452";
+
+
+    public static String jiami(String sSrc) throws InvalidAlgorithmParameterException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        byte[] raw = sKey.getBytes();
+        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+        IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+        byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
+        return new BASE64Encoder().encode(encrypted);//此处使用BASE64做转码。
     }
 
-    /**
-     * 使用凯撒加密方式解密数据
-     *
-     * @param encryptedData :密文
-     * @param key           :密钥
-     * @return : 源数据
-     */
-    public static String jiemi(String encryptedData, int key) {
-        // 将字符串转为字符数组
-        char[] chars = encryptedData.toCharArray();
-        StringBuilder sb = new StringBuilder();
-        // 遍历数组
-        for (char aChar : chars) {
-            // 获取字符的ASCII编码
-            int asciiCode = aChar;
-            // 偏移数据
-            asciiCode -= key;
-            // 将偏移后的数据转为字符
-            char result = (char) asciiCode;
-            // 拼接数据
-            sb.append(result);
-        }
 
-        return sb.toString();
+    public static String jiemi(String sSrc) {
+        try {
+            byte[] raw = sKey.getBytes("ASCII");
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(sSrc);//先用base64解密
+            byte[] original = cipher.doFinal(encrypted1);
+            String originalString = new String(original, "utf-8");
+            return originalString;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 //    @Test
 //    public void test(){

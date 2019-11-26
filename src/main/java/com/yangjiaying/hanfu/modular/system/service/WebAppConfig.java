@@ -1,5 +1,6 @@
 package com.yangjiaying.hanfu.modular.system.service;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -21,9 +22,19 @@ import java.util.List;
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        List<String> list = new ArrayList<>();
-        list.add("/homepage");
-        registry.addInterceptor(new RequestAspect()).addPathPatterns(list);
+//        List<String> list = new ArrayList<>();
+//        list.add("/login");
+//        list.add("/register");
+//        list.add("/isItRegistered");
+//        registry.addInterceptor(new RequestAspect())
+//                .addPathPatterns("/*")
+//                .excludePathPatterns(list);
+        registry.addInterceptor(requestAspect())
+                .addPathPatterns("/**");
+        // 添加拦截的请求，并排除几个不拦截的请求
     }
-
+    @Bean
+    public RequestAspect requestAspect() {
+        return new RequestAspect();
+    }
 }

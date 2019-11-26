@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * 启动类
  */
+
 @SpringBootApplication
 public class HanfuApplication {
 
@@ -17,5 +18,4 @@ public class HanfuApplication {
         SpringApplication.run(HanfuApplication.class, args);
         logger.info("运行成功");
     }
-
 }

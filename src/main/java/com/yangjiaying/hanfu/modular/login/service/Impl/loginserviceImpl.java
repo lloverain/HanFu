@@ -36,4 +36,9 @@ public class loginserviceImpl implements loginservice {
     public int selectaccount(String account) {
         return loginMapper.selectaccount(account);
     }
+
+    @Override
+    public user findUserById(String userId) {
+        return loginMapper.findUserById(userId);
+    }
 }

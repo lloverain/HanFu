@@ -20,6 +20,9 @@ public interface loginMapper {
     @Insert("insert into users(account,password,name,sex) values(#{account},#{password},#{name},#{sex})")
     int register(user user);
 
-    @Select({"select count(*) from users where account = #{account}"})
+    @Select("select count(*) from users where account = #{account}")
     int selectaccount(@Param("account") String account);
+
+    @Select("select * from users where id = #{id}")
+    user findUserById(@Param("id") String userId);
 }

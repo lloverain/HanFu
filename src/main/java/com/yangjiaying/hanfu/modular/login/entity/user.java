@@ -8,6 +8,7 @@ package com.yangjiaying.hanfu.modular.login.entity;
  * @date 2019/11/5 22:12
  */
 public class user {
+    private String id;
     private String account;//账户
     private String password;//密码
     private String name;//昵称
@@ -16,7 +17,16 @@ public class user {
     public user() {
     }
 
-    public user(String account, String password, String name, String sex) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public user(String id, String account, String password, String name, String sex) {
+        this.id = id;
         this.account = account;
         this.password = password;
         this.name = name;
@@ -26,7 +36,8 @@ public class user {
     @Override
     public String toString() {
         return "user{" +
-                "account='" + account + '\'' +
+                "id='" + id + '\'' +
+                ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +

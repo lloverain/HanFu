@@ -10,7 +10,10 @@ spring:
       prefix: /pages
   thymeleaf:
       cache: false
-
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 80
-
+  servlet:
+    session:
+      timeout: 300s

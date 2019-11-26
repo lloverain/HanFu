@@ -13,6 +13,16 @@
     <!--    卡通人物-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"/>
     <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    <!--    bootstrap4-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+            crossorigin="anonymous"></script>
+
     <script src="/assets/modular/login/js/login.js"></script>
 </head>
 <body>
@@ -43,11 +53,11 @@
     </div>
     <!--以上是弹窗，以下是正文-->
     <div class="jumbotron text-center">
-        <h1>汉</h1>
+        <h1>雨</h1>
         <p>
-            有章服之美，谓之华；有礼仪之大，故称夏。<br>
-            岂曰无衣？与子同袍。着我汉家衣裳，兴我礼仪之邦！<br>
-            华夏复兴，衣冠先行，始于衣冠，达于博远。<br>
+            风雨送春归，飞雪迎春到<br>
+            <!--            岂曰无衣？与子同袍。着我汉家衣裳，兴我礼仪之邦！<br>-->
+            <!--            华夏复兴，衣冠先行，始于衣冠，达于博远。<br>-->
         </p>
     </div>
 
@@ -61,9 +71,11 @@
                 <form id="loginForm">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="account" name="account" placeholder="账户"
-                               data-placement="right"
-                               data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                               data-placement="right" autocomplete="off"
+                               data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                        >
                     </div>
+
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" id="password" name="password" placeholder="密码">
                     </div>

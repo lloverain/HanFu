@@ -14,7 +14,7 @@ function login() {
            console.log(name)
            if(code === "200"){
                 location.href = "/homepage" //跳转
-                localStorage.setItem('name',name); //缓存
+               sessionStorage.setItem('name',name); //缓存
            }
            if(code === "500"){
                $('.modal-title').html('提示')
@@ -24,3 +24,9 @@ function login() {
         }
     });
 }
+
+$(document).keydown(function(){
+    if (event.keyCode == 13) {//回车键的键值为13
+        login()
+    }
+});
