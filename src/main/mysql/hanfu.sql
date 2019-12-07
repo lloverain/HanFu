@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `blog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `blog`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: blog
@@ -51,13 +49,14 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
   `sex` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `users_account_uindex` (`account`),
   KEY `sex_idx` (`sex`),
   CONSTRAINT `sex` FOREIGN KEY (`sex`) REFERENCES `sex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,8 +65,33 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'001','123456','杨佳颖',1),(2,'123456','ȹȺȻȼȽȾ','测试一下',3),(3,'20170001','ȹȺȻȼȽȾ','hello',1);
+INSERT INTO `users` VALUES (1,'001','123456','杨佳颖',1),(4,'123456','XxocX/0KV0GKgR9clAas8w==','暖风',3),(17,'1234567','XxocX/0KV0GKgR9clAas8w==','1234567',1),(23,'12345678','XxocX/0KV0GKgR9clAas8w==','aaa',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `xiaoshuo`
+--
+
+DROP TABLE IF EXISTS `xiaoshuo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `xiaoshuo` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `jianjie` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `xiaoshuo`
+--
+
+LOCK TABLES `xiaoshuo` WRITE;
+/*!40000 ALTER TABLE `xiaoshuo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `xiaoshuo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -87,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-12 13:31:48
+-- Dump completed on 2019-12-07 11:23:48

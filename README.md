@@ -110,3 +110,36 @@ json请求格式：
 {"code":200,"message":"账户已存在！"}
 ```
 
+#### 修改密码接口
+
+请求方式：POST
+
+URL：  http://localhost/API/alepwd
+
+请求头:
+
+token:登录成功得到的那个令牌
+
+json请求格式：
+
+```json
+{"account":"123456","oldpassword":"123456","newpassword":"123123"}
+```
+
+------
+
+返回参数
+
+成功参数：
+
+```json
+{"code":200,"data":true,"message":"账户:123456修改成功"}
+```
+
+------
+
+失败参数：
+
+```json
+{"code":500,"data":false,"message":"账户:123456修改失败"}
+```

@@ -41,4 +41,21 @@ public class loginserviceImpl implements loginservice {
     public user findUserById(String userId) {
         return loginMapper.findUserById(userId);
     }
+
+    @Override
+    public boolean updatepwd(String account, String oldpwd,String newpwd) {
+        user user = loginMapper.findoneuser(account,oldpwd);
+        try{
+            System.out.println(user.toString());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        if(user!=null){
+            boolean updatepwd = loginMapper.updatepassword(account,newpwd);
+            return updatepwd;
+        }
+        return false;
+
+    }
 }

@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.yangjiaying.hanfu.modular.login.entity.user;
 import com.yangjiaying.hanfu.modular.system.config.systemConfig;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import java.util.Date;
 
@@ -15,6 +17,7 @@ import java.util.Date;
  */
 public class TokenUtil {
     public String getToken(user user) {
+        Algorithm key = Algorithm.HMAC256(user.getPassword());
         Long now = System.currentTimeMillis();
         Long nexttime = now + systemConfig.PRESCRIPTIONTIME;
         Date nextDate = new Date(nexttime);
@@ -23,7 +26,7 @@ public class TokenUtil {
         token = JWT.create()
                 .withAudience(user.getId())
                 .withExpiresAt(nextDate)
-                .sign(Algorithm.HMAC256(user.getPassword()));
+                .sign(key);
         return token;
     }
 }

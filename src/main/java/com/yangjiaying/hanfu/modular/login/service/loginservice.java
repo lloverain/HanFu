@@ -18,4 +18,6 @@ public interface loginservice {
     int selectaccount(String account);//检查账户是否已经注册
 
     user findUserById(String userId);//#根据id查用户
+
+    boolean updatepwd(String account,String oldpwd,String newpwd);
 }

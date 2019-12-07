@@ -10,7 +10,6 @@ import com.yangjiaying.hanfu.modular.login.util.jiexiJSON;
 import com.yangjiaying.hanfu.modular.system.entity.RestResponse;
 import com.yangjiaying.hanfu.modular.system.service.Impl.TokenUtil;
 import com.yangjiaying.hanfu.modular.system.service.UserLoginToken;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -42,12 +38,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/API")
-public class logincontrol {
+public class LoginPostControl {
 
     @Autowired
     private loginservice loginservice;
 
-    private static Logger logger = LoggerFactory.getLogger(logincontrol.class);
+    private   TokenUtil tokenUtil = new TokenUtil();
+
+    private static Logger logger = LoggerFactory.getLogger(LoginPostControl.class);
 
     @RequestMapping("/signout")
     @UserLoginToken
@@ -63,16 +61,14 @@ public class logincontrol {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(HttpServletRequest request) throws NoSuchPaddingException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, IOException, InvalidAlgorithmParameterException {
+    public String login(HttpServletRequest request) throws IOException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
         jiexiJSON jiexiJSON = new jiexiJSON();
         String json = jiexiJSON.jiexi(request);
         JSONObject jsonObject = JSON.parseObject(json);
         user user = new user();
-        TokenUtil tokenUtil = new TokenUtil();
         user.setAccount(jsonObject.getString("account"));
         user.setPassword(Password.jiami(jsonObject.getString("password")));
         List<user> users = loginservice.selectuser(user);
-        System.out.println(users.toString());
         RestResponse response = new RestResponse();
         if (users.size() == 1) {
             String token = tokenUtil.getToken(users.get(0));
@@ -82,7 +78,7 @@ public class logincontrol {
             loginResponse.setSex(users.get(0).getSex());
             loginResponse.setToken(token);
             response.setCode(200);
-            response.setMessage("/getMessage");
+            response.setMessage("/homepage");
             response.setData(loginResponse);
             return JSON.toJSONString(response);
         } else {
@@ -92,11 +88,37 @@ public class logincontrol {
             return JSON.toJSONString(response);
         }
     }
+
+    /**
+     * 修改密码
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @UserLoginToken
-    @RequestMapping("/getMessage")
+    @RequestMapping(value = "/alepwd",method = RequestMethod.POST)
     @ResponseBody
-    public String getMessage(){
-        return "你已通过验证";
+    public String getMessage(HttpServletRequest request) throws IOException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+        jiexiJSON jiexiJSON = new jiexiJSON();
+        String json = jiexiJSON.jiexi(request);
+        System.out.println("获得的值是:"+json);
+        JSONObject jsonObject = JSON.parseObject(json);
+        String account = jsonObject.getString("account");
+        String oldpwd = jsonObject.getString("oldpassword");
+        String newpwd = jsonObject.getString("newpassword");
+        boolean updatepwd =  loginservice.updatepwd(account,Password.jiami(oldpwd),Password.jiami(newpwd));
+        System.out.println(updatepwd);
+        RestResponse response = new RestResponse();
+        if(updatepwd){
+            response.setCode(200);
+            response.setMessage("账户:"+account+"修改成功");
+            response.setData(updatepwd);
+        }else {
+            response.setCode(500);
+            response.setMessage("账户:"+account+"修改失败");
+            response.setData(updatepwd);
+        }
+        return JSON.toJSONString(response);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

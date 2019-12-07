@@ -1,9 +1,26 @@
-var name = sessionStorage.getItem('name');
-console.log(name.length)
-if(name.length==0||name == "null"){
+var token = sessionStorage.getItem('token')
+if(token!=null){
+    if(token.length==0){
+        window.location.replace("/login") //跳转
+    }else {
+        var name = sessionStorage.getItem('name')
+        $("#name").text(name)
+        $("#content").load("pages/modular/home/homecontent.html")
+    }
+}else {
+    sessionStorage.clear()
     window.location.replace("/login") //跳转
 }
-$("#name").text(name)
+
+
+
+function updatePwd() {
+    $("#content").load("pages/modular/login/updatePwd.html",'',function (response,status,xhr) {
+        console.log(response)
+        console.log(status)
+        console.log(xhr)
+    })
+}
 
 
 function ceshi() {
@@ -39,12 +56,16 @@ function tuichu() {
             var name = json.other;
             console.log(name)
             if(code === "200"){
-                // location.href = "/login" //跳转
                 sessionStorage.clear()
                 window.location.replace("/login") //跳转
-                // localStorage.setItem('name',name); //缓存
 
             }
+        },
+        error:function (date) {
+            console.log(date)
+            sessionStorage.clear()
+            window.location.replace("/login") //跳转
         }
+
     });
 }

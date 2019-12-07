@@ -1,10 +1,7 @@
 package com.yangjiaying.hanfu.modular.login.dao;
 
 import com.yangjiaying.hanfu.modular.login.entity.user;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -25,4 +22,9 @@ public interface loginMapper {
 
     @Select("select * from users where id = #{id}")
     user findUserById(@Param("id") String userId);
+
+    @Select("select * from users where account = #{account} and password = #{password}")
+    user findoneuser(@Param("account")String account,@Param("password")String password);
+    @Update("update users set password = #{password} where account = #{account}")
+    boolean updatepassword(@Param("account")String account,@Param("password") String password);
 }
