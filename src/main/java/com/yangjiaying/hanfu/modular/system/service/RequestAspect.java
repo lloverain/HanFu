@@ -57,6 +57,7 @@ public class RequestAspect implements HandlerInterceptor {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
             if (userLoginToken.required()) {
                 // 执行认证
+                System.out.println("得到的token:"+token);
                 if (token == null) {
                     throw new RuntimeException("无token，请重新登录");
                 }

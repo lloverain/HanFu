@@ -12,7 +12,7 @@ import java.util.List;
 public interface loginMapper {
 
     @Select("select * from users where account = #{account} and password = #{password}")
-    List<user> selectuser(user user);//验证扥估
+    List<user> selectuser(user user);//登录验证
 
     @Insert("insert into users(account,password,name,sex) values(#{account},#{password},#{name},#{sex})")
     int register(user user);
@@ -25,6 +25,5 @@ public interface loginMapper {
 
     @Select("select * from users where account = #{account} and password = #{password}")
     user findoneuser(@Param("account")String account,@Param("password")String password);
-    @Update("update users set password = #{password} where account = #{account}")
-    boolean updatepassword(@Param("account")String account,@Param("password") String password);
+
 }

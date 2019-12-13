@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * 目录：/modular/login/下的所有跳转路径
+ * 统一GET请求
  * @PackageName:com.yangjiaying.hanfu.modular.login.controller
  * @ClassName:loginGetControl
  * @author:yangjiaying

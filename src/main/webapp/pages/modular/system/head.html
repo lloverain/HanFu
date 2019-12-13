@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>头</title>
-    <script src="/assets/modular/system/jquery3.2.1.js"></script>
+    <!--    bootstrap4-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/assets/modular/login/js/register.js"></script>
 </head>
 
 <body>
@@ -11,7 +15,8 @@
     <a class="navbar-brand" href="#">
         Rain
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -24,18 +29,20 @@
                 <a class="nav-link" href="#">论坛</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" style="cursor: pointer" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     其他
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">开发者···</a>
-                    <a class="dropdown-item" href="#">开发者···</a>
+                    <a class="dropdown-item" style="cursor: pointer" onclick="release()">发布失物招领</a>
+                    <a class="dropdown-item" style="cursor: pointer">开发者···</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">开发者···</a>
+                    <a class="dropdown-item" style="cursor: pointer">开发者···</a>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" id="name">name</a>
+                <!--姓名-->
+                <a class="nav-link disabled" id="name">name</a>
             </li>
         </ul>
         <div>
@@ -44,23 +51,24 @@
                     <button type="button" id="tuichu" class="btn btn-secondary" onclick="tuichu()">退出</button>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle " href="#" id="account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle " href="#" id="account" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         修改个人信息
                     </a>
                     <div class="dropdown-menu" aria-labelledby="account">
-                        <a class="dropdown-item" href="#">修改资料</a>
-                        <button type="button" class="dropdown-item" onclick="updatePwd()">修改密码</button>
+                        <a class="dropdown-item" style="cursor: pointer" onclick="updateUser()">修改资料</a>
+                        <a class="dropdown-item" style="cursor: pointer" onclick="updatePwd()">修改密码</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">开发中···</a>
+                        <a class="dropdown-item" style="cursor: pointer">开发中···</a>
                     </div>
                 </li>
             </ul>
         </div>
 
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <!--        <form class="form-inline my-2 my-lg-0">-->
+        <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+        <!--            <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>-->
+        <!--        </form>-->
     </div>
 </nav>
 <script src="/assets/modular/system/js/head.js"></script>

@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * 工具类
- *
+ *  密码加密与解密
  * @PackageName:com.yangjiaying.hanfu.modular.login.util
  * @ClassName:jiamiPassword
  * @author:yangjiaying

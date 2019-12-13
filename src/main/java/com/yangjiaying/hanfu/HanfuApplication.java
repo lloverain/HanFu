@@ -16,6 +16,6 @@ public class HanfuApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(HanfuApplication.class, args);
-        logger.info("运行成功");
+        logger.info("hanfu运行成功");
     }
 }

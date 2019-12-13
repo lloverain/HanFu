@@ -1,6 +1,7 @@
 package com.yangjiaying.hanfu.modular.system.config;
 
 /**
+ * 令牌有效期
  * @PackageName:com.yangjiaying.hanfu.modular.system.config
  * @ClassName:systemConfig
  * @author:yangjiaying

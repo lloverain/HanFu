@@ -19,5 +19,5 @@ public interface loginservice {
 
     user findUserById(String userId);//#根据id查用户
 
-    boolean updatepwd(String account,String oldpwd,String newpwd);
+
 }

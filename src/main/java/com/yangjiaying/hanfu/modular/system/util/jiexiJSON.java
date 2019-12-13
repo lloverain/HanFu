@@ -1,12 +1,11 @@
-package com.yangjiaying.hanfu.modular.login.util;
-
-import com.alibaba.fastjson.JSONObject;
-
+package com.yangjiaying.hanfu.modular.system.util;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * 工具类
+ * 获取前台传的值并转为json数据
  * @PackageName:com.yangjiaying.hanfu.modular.login.util
  * @ClassName:jiexiJSON
  * @author:yangjiaying

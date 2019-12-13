@@ -1,28 +1,26 @@
-console.log("调用了？")
 function register() {
     if(yanzhengaccount() && yanzhengpassword() && yanzhengname()){
         var form = new FormData($("#registerForm")[0]);
         $.ajax({
-            url: "/register",
+            url: "/API/register",
             type: 'POST',
             data: form,
-            processData: false,
-            contentType: false,
-            async: false,
+            processData : false,  //必须false才会避开jQuery对 formdata 的默认处理
+            contentType : false,  //必须false才会自动加上正确的Content-Type
+            async: true,
             success: function (data) {
                 console.log(data)
                 var json = JSON.parse(data);
                 var code = json.code;
                 var name = json.other;
-                console.log(name)
-                if(code === "200"){
+                if(code === 200){
                     $('.modal-title').html('成功')
                     $('.modal-body').html("注册成功！")
                     $('#myModal').modal('show')
                     location.href = "/homepage" //跳转
                     localStorage.setItem('name',name); //缓存
                 }
-                if(code === "500"){
+                if(code === 500){
                     $('.modal-title').html('提示')
                     $('.modal-body').html("注册失败")
                     $('#myModal').modal('show')
@@ -51,9 +49,11 @@ function yanzhengaccount() {
             return false
         }else {
             $.ajax({
-                url: "/isItRegistered?account="+zhanghu,
+                url: "/API/isItRegistered",
                 type: 'POST',
-                data: {},
+                data: JSON.stringify({
+                    "account":zhanghu
+                }),
                 processData: false,
                 contentType: 'application/json;charset=utf-8',
                 async: false,
@@ -61,7 +61,7 @@ function yanzhengaccount() {
                     console.log(data)
                     var json = JSON.parse(data);
                     var code = json.code;
-                    if(code === "200"){
+                    if(code === 200){
                         $('.modal-title').html('提示:账户问题')
                         $('.modal-body').html("账户已存在")
                         $('#myModal').modal('show')
@@ -72,6 +72,19 @@ function yanzhengaccount() {
     }
     return true
 
+}
+
+function yanzhengpwd() {
+    var pwd = $('#newpassword').val()
+    var alignpwd = $('#newpasswords').val()
+    if(pwd!=alignpwd){
+        $('.modal-title').html('提示')
+        $('.modal-body').html('输入的密码不一致')
+        $('#myModal').modal('show')
+        return false
+    }else {
+        return true
+    }
 }
 
 function yanzhengpassword() {

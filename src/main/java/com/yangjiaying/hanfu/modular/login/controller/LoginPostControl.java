@@ -6,7 +6,7 @@ import com.yangjiaying.hanfu.modular.login.entity.loginResponse;
 import com.yangjiaying.hanfu.modular.login.entity.user;
 import com.yangjiaying.hanfu.modular.login.service.loginservice;
 import com.yangjiaying.hanfu.modular.login.util.Password;
-import com.yangjiaying.hanfu.modular.login.util.jiexiJSON;
+import com.yangjiaying.hanfu.modular.system.util.jiexiJSON;
 import com.yangjiaying.hanfu.modular.system.entity.RestResponse;
 import com.yangjiaying.hanfu.modular.system.service.Impl.TokenUtil;
 import com.yangjiaying.hanfu.modular.system.service.UserLoginToken;
@@ -29,8 +29,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
- * 登录注册模块
- *
+ * 统一API接口
+ * 统一POST请求
  * @PackageName:com.yangjiaying.modular.controller
  * @ClassName:logincontrol
  * @author:yangjiaying
@@ -43,21 +43,15 @@ public class LoginPostControl {
     @Autowired
     private loginservice loginservice;
 
-    private   TokenUtil tokenUtil = new TokenUtil();
+    private TokenUtil tokenUtil = new TokenUtil();
 
     private static Logger logger = LoggerFactory.getLogger(LoginPostControl.class);
 
-    @RequestMapping("/signout")
-    @UserLoginToken
-    @ResponseBody
-    public String signOut() {
-        return "";
-    }
-
     /**
-     * 登录验证接口
+     * 用户登录接口
+     * 成功登录后返回一个10分钟有效期令牌
      *
-     * @return
+     * @return token
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -90,59 +84,39 @@ public class LoginPostControl {
     }
 
     /**
-     * 修改密码
+     * 注册
+     *
      * @param request
      * @return
      * @throws IOException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
      */
-    @UserLoginToken
-    @RequestMapping(value = "/alepwd",method = RequestMethod.POST)
-    @ResponseBody
-    public String getMessage(HttpServletRequest request) throws IOException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
-        jiexiJSON jiexiJSON = new jiexiJSON();
-        String json = jiexiJSON.jiexi(request);
-        System.out.println("获得的值是:"+json);
-        JSONObject jsonObject = JSON.parseObject(json);
-        String account = jsonObject.getString("account");
-        String oldpwd = jsonObject.getString("oldpassword");
-        String newpwd = jsonObject.getString("newpassword");
-        boolean updatepwd =  loginservice.updatepwd(account,Password.jiami(oldpwd),Password.jiami(newpwd));
-        System.out.println(updatepwd);
-        RestResponse response = new RestResponse();
-        if(updatepwd){
-            response.setCode(200);
-            response.setMessage("账户:"+account+"修改成功");
-            response.setData(updatepwd);
-        }else {
-            response.setCode(500);
-            response.setMessage("账户:"+account+"修改失败");
-            response.setData(updatepwd);
-        }
-        return JSON.toJSONString(response);
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public String register(HttpServletRequest request) throws IOException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
-        jiexiJSON jiexiJSON = new jiexiJSON();
-        String json = jiexiJSON.jiexi(request);
-        JSONObject jsonObject = JSON.parseObject(json);
-
+        String account = request.getParameter("account");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String sex = request.getParameter("sex");
         RestResponse response = new RestResponse();
         user user = new user();
-
-        user.setAccount(jsonObject.getString("account"));
-        user.setPassword(Password.jiami(jsonObject.getString("password")));
-        user.setName(jsonObject.getString("name"));
-        user.setSex(jsonObject.getString("sex"));
+        user.setAccount(account);
+        user.setPassword(Password.jiami(password));
+        user.setName(name);
+        user.setSex(sex);
 
         try {
             int state_num = loginservice.register(user);
-            if(state_num ==1 ){
+            if (state_num == 1) {
                 response.setCode(200);
                 response.setMessage("注册成功！");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             response.setCode(500);
             response.setMessage("注册失败");
@@ -151,6 +125,13 @@ public class LoginPostControl {
         return JSON.toJSONString(response);
     }
 
+    /**
+     * 验证账户是否存在
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/isItRegistered", method = RequestMethod.POST)
     @ResponseBody
     public String isItRegistered(HttpServletRequest request) throws IOException {
@@ -165,7 +146,7 @@ public class LoginPostControl {
             response.setMessage("账户已存在！");
         } else {
             response.setCode(500);
-            response.setMessage("账户"+account+"可注册！");
+            response.setMessage("账户" + account + "可注册！");
 
         }
         return JSON.toJSONString(response);

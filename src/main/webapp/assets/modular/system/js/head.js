@@ -12,16 +12,24 @@ if(token!=null){
     window.location.replace("/login") //跳转
 }
 
-
-
 function updatePwd() {
     $("#content").load("pages/modular/login/updatePwd.html",'',function (response,status,xhr) {
-        console.log(response)
-        console.log(status)
-        console.log(xhr)
+
     })
 }
 
+function updateUser() {
+    $("#content").load("pages/modular/login/updateUser.html",'',function (response,status,xhr) {
+
+    })
+}
+
+
+function release() {
+    $("#content").load("pages/modular/LostAndFound/release.html",'',function (response,status,xhr) {
+
+    })
+}
 
 function ceshi() {
     var eml = $("#content")

@@ -12,6 +12,9 @@ spring:
       cache: false
   main:
     allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
 server:
   port: 80
   servlet:

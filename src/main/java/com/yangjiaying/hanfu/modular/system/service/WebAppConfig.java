@@ -22,15 +22,12 @@ import java.util.List;
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        List<String> list = new ArrayList<>();
-//        list.add("/login");
-//        list.add("/register");
-//        list.add("/isItRegistered");
-//        registry.addInterceptor(new RequestAspect())
-//                .addPathPatterns("/*")
-//                .excludePathPatterns(list);
+        List<String> list = new ArrayList<>();
+        list.add("/login");
+        list.add("/register");
+        list.add("/getImage");
         registry.addInterceptor(requestAspect())
-                .addPathPatterns("/**");
+                .addPathPatterns("/**").excludePathPatterns(list);
         // 添加拦截的请求，并排除几个不拦截的请求
     }
     @Bean

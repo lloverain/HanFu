@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Date;
 
 /**
+ * 生成token
  * @PackageName:com.yangjiaying.hanfu.modular.system.service.Impl
  * @ClassName:getToken
  * @author:yangjiaying
